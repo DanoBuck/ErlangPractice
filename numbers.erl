@@ -102,6 +102,17 @@ minusList(List, MinusSum) ->
       minusList(NewList, NewSum)
   end.
 
+multiplyListValues(List, Sum) ->
+  if
+    length(List) == 1 ->
+      Sum * lists:nth(1, List);
+    length(List) > 1 ->
+      NewSum = Sum * lists:nth(1, List),
+      NewList = lists:delete(lists:nth(1, List), List),
+      multiplyListValues(NewList, NewSum)
+  end.
+
+
 builtInSumOfList(List) ->
   lists:sum(List).
 
@@ -131,6 +142,9 @@ main() ->
   erlang:display(builtInSumOfList(List)),
 
   io:format("~s", ["\nThe minus value in list using recursive function is "]),
-  erlang:display(minusList(List))
+  erlang:display(minusList(List))  ,
+
+  io:format("~s", ["\nThe multiplication value in list using recursive function is "]),
+  erlang:display(multiplyListValues(List, 1))
 .
 
